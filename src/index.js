@@ -1,20 +1,23 @@
-const express = require('express')
-const app = express()
-const port = 3001
+require("dotenv").config();
+require("./db/config.db");
+const express = require("express");
+const morgan = require("morgan");
+const app = express();
 
-// métodos tienen Rutas y Controladores
-app.get("/", (req, res)=> {
-  res.send('Hola desde el back por la solicitud GET')
-})
+//middlewares
+app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
-app.post('/crear', (req, res) => {
-  app.send("Hola desde el POST")
-})
+//routes
+app.use("/api", require("./routes/index.routes"));
 
-app.put('/actualizar', (req, res) => {
-  res.send('Hola desde el back por la solicitud PUT')
-})
+// only for debug
+//app.post("/test", (req, res) => {
+//console.log("Test: ", req.body);
+//  res.send("Received data");
+//});
 
-app.listen(port, (req, res) => {
-  console.log("Servidor prendido en el puerto: ", port);
+app.listen(process.env.PORT || 3002, () => {
+  console.log("Servidor operativo en el puerto", process.env.PORT);
 });
