@@ -29,6 +29,11 @@ const UsuariosSchema = new Schema({
     enum: ["usuario", "admin"],
     default: "usuario",
   },
+  login: {
+    type: String,
+    enum: ["logueado", "deslogueado"],
+    default: "deslogueado",
+  },
 });
 
 UsuariosSchema.methods.toJSON = function () {

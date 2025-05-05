@@ -1,12 +1,11 @@
 const {
   registrarUsuarioBD,
   iniciarSesionUsuarioDB,
+  cerrarSesionUsuarioDB,
   obtenerTodosLosUsuariosBD,
   obtenerUnUsuariosPorIdBD,
   editarInfoUsuarioPorIdBD,
-  altaLogicaUsuarioPorIdBD,
-  bajaLogicaUsuarioPorIdBD,
-  bajaFisicaUsuarioPorIdBD,
+  deleteUsuarioPorIdBD,
 } = require("../services/usuarios.services");
 
 const obtenerTodosLosUsuarios = async (req, res) => {
@@ -19,9 +18,7 @@ const obtenerTodosLosUsuarios = async (req, res) => {
 };
 
 const obtenerUnUsuarioPorId = async (req, res) => {
-  const { usuario, statusCode, error } = await obtenerUnUsuariosPorIdBD(
-    req.params.id
-  );
+  const { usuario, statusCode, error } = await obtenerUnUsuariosPorIdBD(req.params.id);
   try {
     res.status(statusCode).json({ usuario });
   } catch {
@@ -30,10 +27,7 @@ const obtenerUnUsuarioPorId = async (req, res) => {
 };
 
 const editarInfoUsuarioPorId = async (req, res) => {
-  const { msg, statusCode, error } = await editarInfoUsuarioPorIdBD(
-    req.params.id,
-    req.body
-  );
+  const { msg, statusCode, error } = await editarInfoUsuarioPorIdBD(req.params.id, req.body);
   try {
     res.status(statusCode).json({ msg });
   } catch {
@@ -41,32 +35,8 @@ const editarInfoUsuarioPorId = async (req, res) => {
   }
 };
 
-const altaLogicaUsuarioPorId = async (req, res) => {
-  const { msg, statusCode, error } = await altaLogicaUsuarioPorIdBD(
-    req.params.id
-  );
-  try {
-    res.status(statusCode).json({ msg });
-  } catch {
-    res.status(statusCode).json({ error });
-  }
-};
-
-const bajaLogicaUsuarioPorId = async (req, res) => {
-  const { msg, statusCode, error } = await bajaLogicaUsuarioPorIdBD(
-    req.params.id
-  );
-  try {
-    res.status(statusCode).json({ msg });
-  } catch {
-    res.status(statusCode).json({ error });
-  }
-};
-
-const bajaFisicaUsuarioPorId = async (req, res) => {
-  const { msg, statusCode, error } = await bajaFisicaUsuarioPorIdBD(
-    req.params.id
-  );
+const deleteUsuarioPorId = async (req, res) => {
+  const { msg, statusCode, error } = await bajaFisicaUsuarioPorIdBD(req.params.id);
   try {
     res.status(statusCode).json({ msg });
   } catch {
@@ -85,12 +55,20 @@ const registroUsuario = async (req, res) => {
 };
 
 const iniciarSesionUsuario = async (req, res) => {
-  const { msg, statusCode, token, error } = await iniciarSesionUsuarioDB(
-    req.body
-  );
+  const { msg, statusCode, token, error } = await iniciarSesionUsuarioDB(req.body);
 
   try {
     res.status(statusCode).json({ msg, token });
+  } catch {
+    res.status(statusCode).json({ error });
+  }
+};
+
+const cerrarSesionUsuario = async (req, res) => {
+  const { msg, statusCode, error } = await cerrarSesionUsuarioDB(req.body);
+
+  try {
+    res.status(statusCode).json({ msg });
   } catch {
     res.status(statusCode).json({ error });
   }
@@ -100,9 +78,8 @@ module.exports = {
   obtenerTodosLosUsuarios,
   obtenerUnUsuarioPorId,
   editarInfoUsuarioPorId,
-  altaLogicaUsuarioPorId,
-  bajaLogicaUsuarioPorId,
-  bajaFisicaUsuarioPorId,
+  deleteUsuarioPorId,
   registroUsuario,
   iniciarSesionUsuario,
+  cerrarSesionUsuario,
 };

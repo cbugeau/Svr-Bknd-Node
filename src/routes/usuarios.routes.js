@@ -2,35 +2,33 @@ const express = require("express");
 const {
   registroUsuario,
   iniciarSesionUsuario,
+  cerrarSesionUsuario,
   obtenerTodosLosUsuarios,
   obtenerUnUsuarioPorId,
   editarInfoUsuarioPorId,
-  altaLogicaUsuarioPorId,
-  bajaLogicaUsuarioPorId,
-  bajaFisicaUsuarioPorId,
+  deleteUsuarioPorId,
 } = require("../controllers/usuarios.controllers");
+
 const auth = require("../middlewares/auth");
 const router = express.Router();
 
 // rutas para c/u de los métodos HTTP.
-//router.get("/", auth("admin"), obtenerTodosLosUsuarios);
-router.get("/", obtenerTodosLosUsuarios);
-
+// router.get("/", auth("admin"), obtenerTodosLosUsuarios);
+router.get("/", auth("admin"), obtenerTodosLosUsuarios);
 router.get("/:id", auth("admin"), obtenerUnUsuarioPorId);
 
-router.put("/:id", auth(["admin", "usuario"]), editarInfoUsuarioPorId);
-router.put("/enabled/:id", auth("admin"), altaLogicaUsuarioPorId);
-router.put("/disabled/:id", auth("admin"), bajaLogicaUsuarioPorId);
+router.put("/:id", auth("admin"), editarInfoUsuarioPorId);
 
-router.post("/register", registroUsuario);
-router.post("/login", iniciarSesionUsuario);
+router.post("/register", registroUsuario);          // Alta usuario: datos completos de acuerdo al schema
+router.post("/login", iniciarSesionUsuario);        // debe validar nombre/contraseña y crear token
+router.post("/logout", cerrarSesionUsuario);      // debe validar nombre/contraseña y token
 
 // only for debug
-//router.post("/test", (req, res) => {
-//  console.log("Test: ", req.body);
-//  res.send("Received data");
+// router.post("/test", (req, res) => {
+//   console.log("Test: ", req.body);
+//   res.send("Received data");
 //});
 
-router.delete("/:id", auth("admin"), bajaFisicaUsuarioPorId);
+router.delete("/:id", auth("admin"), deleteUsuarioPorId);
 
 module.exports = router;
