@@ -26,4 +26,24 @@ const clima = async () => {
   }
 };
 
-module.exports = { clima };
+//https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
+const nasa = async () => {
+  try {
+    const url = `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY`;
+    const datosNasa = await fetch(url);
+    const data = await datosNasa.json();
+
+    return {
+      data,
+      statusCode: 200,
+    };
+  } catch (error) {
+    return {
+      error,
+      statusCode: 500,
+    };
+  }
+
+}
+
+module.exports = { clima, nasa };
