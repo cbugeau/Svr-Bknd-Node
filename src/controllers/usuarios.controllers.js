@@ -36,7 +36,7 @@ const editarInfoUsuarioPorId = async (req, res) => {
 };
 
 const deleteUsuarioPorId = async (req, res) => {
-  const { msg, statusCode, error } = await bajaFisicaUsuarioPorIdBD(req.params.id);
+  const { msg, statusCode, error } = await deleteUsuarioPorIdBD(req.params.id);
   try {
     res.status(statusCode).json({ msg });
   } catch {
