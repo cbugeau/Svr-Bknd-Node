@@ -47,7 +47,7 @@ const editarInfoUsuarioPorIdBD = async (idUsuario, body) => {
     await UsuariosModel.findByIdAndUpdate({ _id: idUsuario }, body);
 
     return {
-      msg: "usuario editado con exito",
+      msg: "usuario modificado con exito",
       statusCode: 200,
     };
   } catch (error) {

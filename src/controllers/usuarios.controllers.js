@@ -26,6 +26,7 @@ const obtenerUnUsuarioPorId = async (req, res) => {
   }
 };
 
+// PUT por params{idUsuario}, por Body {datos del usuarios, formato schema}, y x Headers{token}
 const editarInfoUsuarioPorId = async (req, res) => {
   const { msg, statusCode, error } = await editarInfoUsuarioPorIdBD(req.params.id, req.body);
   try {
